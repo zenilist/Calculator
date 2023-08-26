@@ -4,6 +4,13 @@ buttons.forEach((button) => {
         takeInput(button.innerText);
     }
 })
+
+const keypress = document.addEventListener('keydown', (e) =>{
+    let name = e.key;
+    let code = e.code;
+    if (isDigit(name) || name === "*" || name === "/" || name === "-" || name === "+" || name ==="%" || name === "." || name === "Escape" || name==="Enter")
+        takeInput(name);
+})
 const input = document.getElementById("input");
 const display = document.getElementById("display");
 let num1;
@@ -14,16 +21,15 @@ let decimal = false;
 let track_last_input = []
 let text = "";
 function updateInput(button) {
-    if (button === "=" || button === "C" || button === "del") return;
+    if (button === "=" || button === "C" || button === "del" || button === "Escape" || button === "Enter" || button === "Backspace") return;
     text += button;
     input.innerText = text;
 }
 function takeInput(button) {
-    if (button === "C") reset();
-    if (button === "del") del();
+    if (button === "C" || button === "Escape") reset();
+    if (button === "del" || button === "Backspace") del();
     else if (isDigit(button) || button === ".") {
         parseNumber(button);
-        // handleDigit(button);
     }
     else {
         if (op != undefined) operate();
@@ -37,8 +43,8 @@ function takeInput(button) {
             case "-":
                 op = "-";
                 break;
-            case "X":
-                op = "X";
+            case "*":
+                op = "*";
                 break;
             case "%":
                 op = "%";
@@ -47,7 +53,7 @@ function takeInput(button) {
         track_last_input.push("op")
         currNum = "";
     }
-    if (button === "=") {
+    if (button === "=" || button === "Enter") {
         if (divide_by_zero) {
             displayResult(true);
         }
@@ -101,7 +107,7 @@ function operate() {
         case "-":
             subtract();
             break;
-        case "X":
+        case "*":
             multiply();
             break;
         case "/":
