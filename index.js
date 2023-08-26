@@ -10,11 +10,6 @@ let num1;
 let num2;
 let op;
 let divide_by_zero = false;
-let lastInput = {
-    num1: false,
-    num2: false,
-    op: false
-};
 let track_last_input = []
 let text = "";
 function updateInput(button) {
@@ -46,7 +41,6 @@ function takeInput(button) {
                 op = "%";
                 break;
         }
-        setLastInput(false, false, true);
         track_last_input.push("op")
     }
     if (button === "=") {
@@ -72,24 +66,20 @@ function reset() {
 function handleDigit(button) {
     if (num1 == undefined) {
         num1 = parseInt(button)
-        setLastInput(true, false, false);
         track_last_input.push("num1")
     }
     else if (op == undefined) {
         num1 *= 10;
         num1 += parseInt(button);
-        setLastInput(true, false, false);
         track_last_input.push("num1")
     }
     else if (num2 == undefined) {
         num2 = parseInt(button);
-        setLastInput(false, true, false);
         track_last_input.push("num2")
     }
     else {
         num2 *= 10;
         num2 += parseInt(button);
-        setLastInput(false, true, false);
         track_last_input.push("num2")
     }
 }
@@ -147,11 +137,7 @@ function divide() {
 function isDigit(symbol) {
     return /^-?\d+$/.test(symbol)
 }
-function setLastInput(bool_1, bool_2, bool_op) {
-    lastInput.num1 = bool_1;
-    lastInput.num2 = bool_2;
-    lastInput.op = bool_op;
-}
+
 function del() {
     last_in = track_last_input.pop();
     switch (last_in) {
@@ -162,15 +148,7 @@ function del() {
         case "op":
             op = undefined;
     }
-    // if (lastInput.num1 == true){
-    //     num1 = Math.floor(num1/10);
-    // }
-    // else if (lastInput.num2 == true){
-    //     num2 = Math.floor(num2/10);
-    // }
-    // else{
-    //     op = undefined;
-    // }
+
     text = text.slice(0, -1);
     updateInput("")
 }
