@@ -25,9 +25,10 @@ button{
     height: 65px;
     width: 65px;
     background-color: blueviolet;
-    color:darkturquoise
+    color:darkturquoise;
+    padding: 0px;
 }
-#display{
+#display, #input{
     text-align: end;
     color:rgb(77, 26, 11);
     font-size: larger;

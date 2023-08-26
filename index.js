@@ -4,6 +4,7 @@ buttons.forEach((button) => {
         takeInput(button.innerText);
     }
 })
+const input = document.getElementById("input");
 const display = document.getElementById("display");
 let num1;
 let num2;
@@ -14,6 +15,14 @@ let lastInput = {
     num2: false,
     op: false
 };
+let track_last_input = []
+let text = "";
+function updateInput(button) {
+    console.log(button);
+    if (button === "=" || button === "C" || button === "del") return;
+    text += button;
+    input.innerText = text;
+}
 function takeInput(button) {
     if (button === "C") reset();
     if (button === "del") del();
@@ -37,16 +46,18 @@ function takeInput(button) {
                 op = "%";
                 break;
         }
-        setLastInput(false,false,true);
+        setLastInput(false, false, true);
+        track_last_input.push("op")
     }
-    if (button === "="){
-        if (divide_by_zero){
+    if (button === "=") {
+        if (divide_by_zero) {
             displayResult(true);
         }
-        else{
+        else {
             displayResult(false);
         }
     }
+    updateInput(button);
 
 }
 function reset() {
@@ -54,40 +65,45 @@ function reset() {
     num1 = undefined;
     num2 = undefined;
     op = undefined;
+    text = "";
+    updateInput("");
+
 }
 function handleDigit(button) {
     if (num1 == undefined) {
-        console.log("no digit")
         num1 = parseInt(button)
-        console.log(num1);
-        setLastInput(true,false,false);
+        setLastInput(true, false, false);
+        track_last_input.push("num1")
     }
     else if (op == undefined) {
         num1 *= 10;
         num1 += parseInt(button);
-        console.log(num1);
-        setLastInput(true,false,false);
+        setLastInput(true, false, false);
+        track_last_input.push("num1")
     }
     else if (num2 == undefined) {
-        console.log("no num2 yet");
         num2 = parseInt(button);
-        console.log(num2);
-        setLastInput(false,true,false);
+        setLastInput(false, true, false);
+        track_last_input.push("num2")
     }
     else {
         num2 *= 10;
         num2 += parseInt(button);
-        console.log(num2);
-        setLastInput(false,true,false);
+        setLastInput(false, true, false);
+        track_last_input.push("num2")
     }
 }
 
 function displayResult(div_zero) {
-    if (div_zero){display.innerText = "Divide by zero!";
-    divide_by_zero = false;
-}
-    else
+    if (div_zero) {
+        display.innerText = "Divide by zero!";
+        divide_by_zero = false;
+    }
+    else {
         display.innerText = num1;
+        text = num1;
+        updateInput("");
+    }
 }
 
 function operate() {
@@ -126,24 +142,35 @@ function multiply() {
 function divide() {
     if (num2 === 0) divide_by_zero = true;
     else
-        num1 = Math.round(num1/num2*100)/100;
+        num1 = Math.round(num1 / num2 * 100) / 100;
 }
 function isDigit(symbol) {
     return /^-?\d+$/.test(symbol)
 }
-function setLastInput(bool_1,bool_2,bool_op){
+function setLastInput(bool_1, bool_2, bool_op) {
     lastInput.num1 = bool_1;
     lastInput.num2 = bool_2;
     lastInput.op = bool_op;
 }
-function del(){
-    if (lastInput.num1 == true){
-        num1 = Math.floor(num1/10);
+function del() {
+    last_in = track_last_input.pop();
+    switch (last_in) {
+        case "num1":
+            num1 = Math.floor(num1 / 10);
+        case "num2":
+            num2 = Math.floor(num2 / 10);
+        case "op":
+            op = undefined;
     }
-    else if (lastInput.num2 == true){
-        num2 = Math.floor(num2/10);
-    }
-    else{
-        op = undefined;
-    }
+    // if (lastInput.num1 == true){
+    //     num1 = Math.floor(num1/10);
+    // }
+    // else if (lastInput.num2 == true){
+    //     num2 = Math.floor(num2/10);
+    // }
+    // else{
+    //     op = undefined;
+    // }
+    text = text.slice(0, -1);
+    updateInput("")
 }
