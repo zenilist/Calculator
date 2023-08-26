@@ -13,7 +13,6 @@ let divide_by_zero = false;
 let track_last_input = []
 let text = "";
 function updateInput(button) {
-    console.log(button);
     if (button === "=" || button === "C" || button === "del") return;
     text += button;
     input.innerText = text;
@@ -143,10 +142,13 @@ function del() {
     switch (last_in) {
         case "num1":
             num1 = Math.floor(num1 / 10);
+            break;
         case "num2":
             num2 = Math.floor(num2 / 10);
+            break;
         case "op":
             op = undefined;
+            break;
     }
 
     text = text.slice(0, -1);
