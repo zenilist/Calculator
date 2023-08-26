@@ -10,7 +10,6 @@ const keypress = document.addEventListener('keydown', (e) =>{
     let code = e.code;
     if (isDigit(name) || name === "*" || name === "/" || name === "-" || name === "+" || name ==="%" || name === "." || name === "Escape" || name==="Enter")
         takeInput(name);
-    console.log(name)
 })
 const input = document.getElementById("input");
 const display = document.getElementById("display");
@@ -31,7 +30,6 @@ function takeInput(button) {
     if (button === "del" || button === "Backspace") del();
     else if (isDigit(button) || button === ".") {
         parseNumber(button);
-        // handleDigit(button);
     }
     else {
         if (op != undefined) operate();
