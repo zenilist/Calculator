@@ -1,0 +1,31 @@
+body,html{
+    margin: 0px;
+    height: 100%;
+}
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: beige;
+    font-weight: bolder;
+    font-size: 30px;
+}
+.cal-container{
+    display: flex;
+}
+button{
+    height: 65px;
+    width: 65px;
+    background-color: blueviolet;
+    color:darkturquoise
+}
+#display{
+    text-align: end;
+    color:rgb(77, 26, 11);
+    font-size: larger;
+}
+#b1,#b2,#b3,#b4,#b5,#b6,#b7,#b8,#b9,#b0,#b00{
+    background-color: rgb(33, 71, 162);
+    color:rgb(212, 150, 15);
+    font-weight: bolder;
+}
