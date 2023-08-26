@@ -34,8 +34,11 @@ button{
     color:rgb(77, 26, 11);
     font-size: larger;
 }
-#b1,#b2,#b3,#b4,#b5,#b6,#b7,#b8,#b9,#b0,#b00{
+#num{
     background-color: rgb(33, 71, 162);
     color:rgb(212, 150, 15);
     font-weight: bolder;
+}
+#num:hover{
+    background-color: #b80e0e;
 }
