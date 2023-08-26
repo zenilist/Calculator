@@ -29,6 +29,7 @@ button{
     padding: 0px;
 }
 #display, #input{
+    height: 43.5px;
     text-align: end;
     color:rgb(77, 26, 11);
     font-size: larger;
