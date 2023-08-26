@@ -8,7 +8,7 @@ buttons.forEach((button) => {
 const keypress = document.addEventListener('keydown', (e) =>{
     let name = e.key;
     let code = e.code;
-    if (isDigit(name) || name === "*" || name === "/" || name === "-" || name === "+" || name ==="%" || name === "." || name === "Escape" || name==="Enter")
+    if (isDigit(name) || name === "*" || name === "/" || name === "-" || name === "+" || name ==="%" || name === "." || name === "Escape" || name==="Enter" || name === "Backspace")
         takeInput(name);
 })
 const input = document.getElementById("input");
