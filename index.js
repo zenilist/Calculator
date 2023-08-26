@@ -10,6 +10,7 @@ let num1;
 let num2;
 let op;
 let divide_by_zero = false;
+let decimal = false;
 let track_last_input = []
 let text = "";
 function updateInput(button) {
@@ -20,7 +21,10 @@ function updateInput(button) {
 function takeInput(button) {
     if (button === "C") reset();
     if (button === "del") del();
-    else if (isDigit(button)) handleDigit(button);
+    else if (isDigit(button) || button === ".") {
+        parseNumber(button);
+        // handleDigit(button);
+    }
     else {
         if (op != undefined) operate();
         switch (button) {
@@ -41,6 +45,7 @@ function takeInput(button) {
                 break;
         }
         track_last_input.push("op")
+        currNum = "";
     }
     if (button === "=") {
         if (divide_by_zero) {
@@ -62,24 +67,17 @@ function reset() {
     updateInput("");
 
 }
-function handleDigit(button) {
-    if (num1 == undefined) {
-        num1 = parseInt(button)
-        track_last_input.push("num1")
+let currNum = ""
+function parseNumber(button){
+    if (button === "." && currNum.includes("."))return;
+    currNum += button;
+    if (num1 == undefined || op == undefined){
+        num1 = parseFloat(currNum);
+        track_last_input.push("num1");
     }
-    else if (op == undefined) {
-        num1 *= 10;
-        num1 += parseInt(button);
-        track_last_input.push("num1")
-    }
-    else if (num2 == undefined) {
-        num2 = parseInt(button);
-        track_last_input.push("num2")
-    }
-    else {
-        num2 *= 10;
-        num2 += parseInt(button);
-        track_last_input.push("num2")
+    else{
+        num2 = parseFloat(currNum);
+        track_last_input.push(num2);
     }
 }
 
@@ -123,10 +121,10 @@ function add() {
     num1 = num1 + num2;
 }
 function subtract() {
-    num1 = num1 - num2;
+    num1 = Math.round((num1 - num2) * 100) / 100;
 }
 function multiply() {
-    num1 *= num2;
+    num1 = Math.round(num1 * num2 * 100) / 100;
 }
 function divide() {
     if (num2 === 0) divide_by_zero = true;
