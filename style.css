@@ -13,6 +13,14 @@ body{
 .cal-container{
     display: flex;
 }
+button:hover{
+    background-color: azure;
+}
+button:active{
+    background-color: #950192;
+    box-shadow: 0 3px #666;
+    transform: translateY(2px);
+}
 button{
     height: 65px;
     width: 65px;
